@@ -1,16 +1,15 @@
 import numpy as np
 
 def get_an_array(n, m):
-    number_of_elements = n * (m + 1)
-    a = np.array([])
-    for i in range(number_of_elements):
-        x = int(input())
-        a.append(x)
+    a = np.zeros((n, m + 1))
+    for i in range(n):
+        a[i] = [float(item) for item in input().split()]
     return a
 
 def main():
     n, m = map(int, input().split())
-    print(get_an_array(n, m))
+    array = get_an_array(n, m)
+    print(array)
 
 if __name__ == "__main__":
     main()
