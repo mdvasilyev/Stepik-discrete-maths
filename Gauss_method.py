@@ -11,18 +11,14 @@ def remove_last_column(array):
     return array
 
 def first_elimination(array, n, m):
-    new_array = np.zeros_like(array)
-    coefficient = 0
+    new_array = array
     for i in range(n):
-        if i == n:
+        if i == 0:
             coefficient = 0
         else:
-            coefficient = array[i + 1, i] / array[i, i]
-        for j in range(i, m + 1):
-            if i == 0:
-                new_array[i, j] = array[i, j]
-            else:
-                new_array[i, j] = array[i, j] - coefficient * array[i, j]
+            coefficient = array[i, i - 1] / array[i - 1, i - 1]
+        for j in range(m + 1):
+            new_array[i, j] = array[i, j] - coefficient * array[i - 1, j]
     return new_array
 
 def main():
