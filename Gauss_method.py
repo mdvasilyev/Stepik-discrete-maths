@@ -1,7 +1,7 @@
 import numpy as np
 
 def get_an_array(n, m):
-    array = np.zeros((n, m + 1))
+    array = np.zeros((n, m + 1), dtype=int)
     for i in range(n):
         array[i] = [float(item) for item in input().split()]
     return array
@@ -36,7 +36,7 @@ def back_substitution(eliminated_full_array, n):
     variables = np.zeros(n)
     for i in range(n - 1, -1, -1):
         if i == n - 1:
-            variables[i] = eliminated_full_array[i, n] / eliminated_full_array[i, n - 1]
+            variables[i] = eliminated_full_array[i, n] / eliminated_full_array[i, i]
         else:
             sum = 0
             for j in range(n - 1, i, -1):
@@ -49,14 +49,14 @@ def main():
     array = get_an_array(n, m)
     eliminated_full_array = first_elimination(array, n, m)
     eliminated_array = np.delete(eliminated_full_array, -1, axis=1)
-    full_rank = np.linalg.matrix_rank(eliminated_full_array)
-    rank = np.linalg.matrix_rank(eliminated_array)
     print(eliminated_full_array)
+    '''full_rank = np.linalg.matrix_rank(eliminated_full_array)
+    rank = np.linalg.matrix_rank(eliminated_array)
     need_output = decision(full_rank, rank, m)
     if need_output == True:
         variables = back_substitution(eliminated_full_array, n)
         for i in range(n):
-            print(variables[i], end=' ')
+            print(variables[i], end=' ')'''
 
 if __name__ == "__main__":
     main()
