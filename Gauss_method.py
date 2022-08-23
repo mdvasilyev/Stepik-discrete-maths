@@ -12,6 +12,12 @@ def remove_last_column(array):
 
 def first_elimination(array, n, m):
     for i in range(n - 1):              # i stands for major line for calculating coefficients
+        if array[i, i] == 0:
+            coef_array = array[:, [i]]
+            good_index = np.transpose(np.nonzero(coef_array))[:, [0]][-1][0]
+            array[[i, good_index]] = array[[good_index, i]]
+        else:
+            continue
         for k in range(n - i):          # k stands for lines below
             if k == 0:
                 coefficient = 0
@@ -50,13 +56,13 @@ def main():
     eliminated_full_array = first_elimination(array, n, m)
     eliminated_array = np.delete(eliminated_full_array, -1, axis=1)
     print(eliminated_full_array)
-    '''full_rank = np.linalg.matrix_rank(eliminated_full_array)
+    full_rank = np.linalg.matrix_rank(eliminated_full_array)
     rank = np.linalg.matrix_rank(eliminated_array)
     need_output = decision(full_rank, rank, m)
     if need_output == True:
         variables = back_substitution(eliminated_full_array, n)
         for i in range(n):
-            print(variables[i], end=' ')'''
+            print(variables[i], end=' ')
 
 if __name__ == "__main__":
     main()
