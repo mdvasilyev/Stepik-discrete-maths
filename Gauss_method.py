@@ -11,11 +11,13 @@ def remove_last_column(array):
     return array
 
 def first_elimination(array, n, m):
-    for i in range(m - 1):                 # i stands for major line for calculating coefficients
+    if n > m:
+        ref_number = m
+    else:
+        ref_number = n
+    for i in range(ref_number - 1):        # i stands for major line for calculating coefficients
         if array[i, i] == 0:
             coef_array = array[:, [i]]
-            indexes = np.arange(i)
-            coef_array = np.delete(coef_array, indexes)
             good_index = np.transpose(np.nonzero(coef_array))[:, [0]][-1][0]
             array[[i, good_index]] = array[[good_index, i]]
         else:
