@@ -7,8 +7,7 @@ def get_an_array(n, m):
     return array
 
 def remove_last_column(array):
-    array = np.delete(array, -1, axis=1)
-    return array
+    return np.delete(array, -1, axis=1)
 
 def first_elimination(array, n, m):
     if n > m:
@@ -17,8 +16,8 @@ def first_elimination(array, n, m):
         ref_number = n
     for i in range(ref_number - 1):        # i stands for major line for calculating coefficients
         if array[i, i] == 0:
-            coef_array = array[:, [i]]
-            good_index = np.transpose(np.nonzero(coef_array))[:, [0]][-1][0]
+            coeff_array = array[:, [i]]
+            good_index = np.transpose(np.nonzero(coeff_array))[:, [0]][-1][0]
             array[[i, good_index]] = array[[good_index, i]]
         else:
             pass
@@ -59,7 +58,6 @@ def main():
     array = get_an_array(n, m)
     eliminated_full_array = first_elimination(array, n, m)
     eliminated_array = np.delete(eliminated_full_array, -1, axis=1)
-    print(eliminated_full_array)
     full_rank = np.linalg.matrix_rank(eliminated_full_array)
     rank = np.linalg.matrix_rank(eliminated_array)
     need_output = decision(full_rank, rank, m)
