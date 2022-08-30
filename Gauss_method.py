@@ -21,7 +21,7 @@ def first_elimination(array, n, m):
             array[[i, good_index]] = array[[good_index, i]]
         else:
             pass
-        for k in range(n - i):             # k stands for lines below
+        for k in range(ref_number - i):             # k stands for lines below
             if k == 0:
                 coefficient = 0
             else:
