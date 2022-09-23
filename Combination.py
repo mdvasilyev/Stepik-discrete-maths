@@ -12,7 +12,7 @@ def recurrence(k, n):
         i += 1
     return sum
 
-def all_combinations(k, num_of_elements):
+def all_combinations(k, n):
     elements = np.arange(k, dtype=int)
     while True:
         for i in range(k):
@@ -20,7 +20,7 @@ def all_combinations(k, num_of_elements):
         print()
         m = -1
         for i in range(k - 1, -1, -1):
-            if elements[i] <= num_of_elements - k + i - 1:
+            if elements[i] <= n - k + i - 1:
                 m = i
                 elements[i] += 1
                 break
