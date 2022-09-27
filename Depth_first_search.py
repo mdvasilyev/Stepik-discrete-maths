@@ -17,7 +17,7 @@ def DFS(v_array, iterator, edge_array):
             DFS(v_array, j - 1, edge_array)
         # elif v_array[j - 1] == True:
         #     continue
-    return None
+    # return None
 
 def connectivity(nodes_number, edge_array):
     connectivity_number = 0
