@@ -1,7 +1,7 @@
 import numpy as np
 
-def DFS(v_array, iterator, edge_array):
-    iterator = int(iterator)
+def DFS(v_array, iterator: int, edge_array):
+    # iterator = int(iterator)
     v_array[iterator] = True
     neighbours_array = np.array([])
     for j in range(len(edge_array)):
@@ -19,7 +19,7 @@ def DFS(v_array, iterator, edge_array):
         #     continue
     # return None
 
-def connectivity(nodes_number, edge_array):
+def connectivity(nodes_number, edge_array) -> int:
     connectivity_number = 0
     v_array = np.full(nodes_number, False, dtype=bool)
     for i, val in enumerate(v_array):
