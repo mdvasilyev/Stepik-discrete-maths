@@ -10,7 +10,7 @@ def adjacency_list(nodes_number: int, edge_array: list) -> dict:
         adjacency_array[v].append(u)
     return adjacency_array
 
-def DFS(start_node: int, goal_node: int) -> list:
+def BFS(start_node: int, goal_node: int) -> list:
     return
 
 # def calculate_distances():
@@ -21,8 +21,6 @@ def main():
     edge_array = list(tuple(map(int,input().split())) for r in range(e))
     print(adjacency_list(v, edge_array))
     # print(adjacency_list(v, edge_array))
-
-
 
 if __name__ == "__main__":
     main()
