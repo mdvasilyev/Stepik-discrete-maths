@@ -1,6 +1,6 @@
 import numpy as np
 
-def dfs(v_array, iterator: int, edge_array):
+def DFS(v_array, iterator: int, edge_array):
     v_array[iterator] = True
     neighbours_array = np.array([])
     for j in range(len(edge_array)):
@@ -11,14 +11,14 @@ def dfs(v_array, iterator: int, edge_array):
     for j in neighbours_array:
         j = int(j)
         if not v_array[j - 1]:
-            dfs(v_array, j - 1, edge_array)
+            DFS(v_array, j - 1, edge_array)
 
 def connectivity(nodes_number, edge_array) -> int:
     connectivity_number = 0
     v_array = np.full(nodes_number, False, dtype=bool)
     for i, val in enumerate(v_array):
         if not val:
-            dfs(v_array, i, edge_array)
+            DFS(v_array, i, edge_array)
             connectivity_number += 1
     return connectivity_number
 
