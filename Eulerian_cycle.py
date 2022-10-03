@@ -14,7 +14,7 @@ def necessity_checker(adjacency_list: dict) -> bool:
             return False
     return True
 
-def func():
+def join_all_cycles():
     return
 
 def main():
@@ -23,7 +23,7 @@ def main():
     if not necessity_checker(adjacency_list(v, edge_array)):
         print("NONE")
     else:
-        print("YES")
+        join_all_cycles
 
 if __name__ == "__main__":
     main()
