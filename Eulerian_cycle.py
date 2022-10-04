@@ -20,22 +20,30 @@ def necessity_checker(adjacency_list: dict) -> bool:
     return True
 
 def join_all_cycles(start_node: int, adj_list: dict) -> list:
-    true_false_adj_list = {}
-    for i in adj_list:
-        true_false_adj_list[i] = [False] * len(adj_list[i])
     queue = deque()
     queue.append(start_node)
     path = [start_node]
-    while False in flatten(list(true_false_adj_list.values())):
+    discarded_nodes = []
+    while len(flatten(list(adj_list.values()))) != 0:
         cur_node = queue.popleft()
+        if len(adj_list[cur_node]) == 0:
+            discarded_nodes.append(path.pop(-1))
+            cur_node = path[-1]
         for i, x in enumerate(adj_list[cur_node]):
-            if true_false_adj_list[cur_node][i] == False:
-                true_false_adj_list[cur_node][i] = True
-                true_false_adj_list[x][adj_list[x].index(cur_node)] = True
-                path.append(adj_list[cur_node][i])
-                queue.append(adj_list[cur_node][i])
-                break
+            path.append(adj_list[cur_node][i])
+            queue.append(adj_list[cur_node][i])
+            adj_list[cur_node].pop(i)
+            adj_list[x].pop(adj_list[x].index(cur_node))
+            break
+    discarded_nodes = list(reversed(discarded_nodes))
+    for i in range(len(discarded_nodes)):
+        path.append(discarded_nodes[i])
     return path
+
+def check_coincidence(l: list) -> list:
+    if l[0] == l[-1]:
+        l.pop(-1)
+    return l
 
 def main():
     v, e = map(int, input().split())
@@ -44,7 +52,8 @@ def main():
     if not necessity_checker(adj_list):
         print("NONE")
     else:
-        print(join_all_cycles(1, adj_list))
+        euler_cycle = join_all_cycles(1, adj_list)
+        print(check_coincidence(euler_cycle))
 
 if __name__ == "__main__":
     main()
