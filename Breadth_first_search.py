@@ -28,7 +28,8 @@ def BFS(adjacency_list: dict, nodes_number: int, start_node: int) -> list:
 def main():
     v, e = map(int, input().split())
     edge_array = list(tuple(map(int, input().split())) for _ in range(e))
-    for _, x in enumerate(BFS(adjacency_list(v, edge_array), v, 0)):
+    adj_list = adjacency_list(v, edge_array)
+    for _, x in enumerate(BFS(adj_list, v, 0)):
         print(x, end=' ')
 
 if __name__ == "__main__":
