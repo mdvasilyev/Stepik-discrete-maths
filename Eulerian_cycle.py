@@ -18,13 +18,13 @@ def adjacency_list(nodes_number: int, edge_array: list) -> dict:
         adjacency_array[v].append(u)
     return adjacency_array
 
-def necessity_checker(adjacency_list: dict) -> bool:
+def check_necessity(adjacency_list: dict) -> bool:
     for i in adjacency_list:
         if len(adjacency_list[i]) == 0 or len(adjacency_list[i]) % 2 != 0:
             return False
     return True
 
-def join_all_cycles(start_node: int, adj_list: dict, path: list) -> list:
+def pave_a_path(start_node: int, adj_list: dict, path: list) -> list:
     queue = deque()
     queue.append(start_node)
     cur_node = start_node
@@ -51,16 +51,31 @@ def check_path(path: list, nodes_number: int, adj_list: dict):
                 return start_node
     return False
 
+def add_a_cycle(cur_node: int, path: list, adj_list: dict) -> list:
+    index = path.index(cur_node)
+    queue = deque()
+    queue.append(cur_node)
+    while bool(queue):
+        index += 1
+        cur_node = queue.popleft()
+        for i, x in enumerate(adj_list[cur_node]):
+            path.insert(index, adj_list[cur_node][i])
+            queue.append(adj_list[cur_node][i])
+            adj_list[cur_node].pop(i)
+            adj_list[x].pop(adj_list[x].index(cur_node))
+            break
+    return path
+
 def main():
     v, e = map(int, input().split())
     edge_array = list(tuple(map(int, input().split())) for _ in range(e))
     adj_list = adjacency_list(v, edge_array)
-    if not necessity_checker(adj_list):
+    if not check_necessity(adj_list):
         print("NONE")
     else:
         start_node = 1
         path = [start_node]
-        euler_cycle, adj_list = join_all_cycles(1, adj_list, path)
+        euler_cycle, adj_list = pave_a_path(1, adj_list, path)
         euler_cycle = remove_overlap(euler_cycle)
         while len(euler_cycle) != e:
             euler_cycle = remove_overlap(euler_cycle)
@@ -68,7 +83,7 @@ def main():
                 break
             else:
                 start_node = check_path(euler_cycle, v, adj_list)
-                join_all_cycles(start_node, adj_list, euler_cycle)
+                pave_a_path(start_node, adj_list, euler_cycle)
         for i in euler_cycle:
             print(i, end=' ')
 
