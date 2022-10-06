@@ -38,10 +38,10 @@ def pave_a_path(start_node: int, adj_list: dict, path: list) -> list:
 def find_a_node_to_start_with(path: list, adj_list: dict, nodes_number: int) -> int:
     nodes_array = [i + 1 for i in range(nodes_number)]
     for i in nodes_array:
-        for j in adj_list[i]:
-            if i in path and j not in path:
-                node_to_start_with = i
-                return node_to_start_with
+        if i in path and len(adj_list[i]) != 0:
+            node_to_start_with = i
+            break
+    return node_to_start_with
 
 def add_a_cycle(node_to_start_with: int, path: list, adj_list: dict) -> list:
     index = path.index(node_to_start_with)
@@ -62,7 +62,7 @@ def main():
     v, e = map(int, input().split())
     edge_array = list(tuple(map(int, input().split())) for _ in range(e))
     adj_list = adjacency_list(v, edge_array)
-    if v == 0 or not check_necessity(adj_list):
+    if not check_necessity(adj_list):
         print("NONE")
     else:
         start_node = 1
