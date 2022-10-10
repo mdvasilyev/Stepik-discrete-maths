@@ -11,8 +11,8 @@ def adjacency_list(nodes_number: int, edge_array: list) -> dict:
     return adjacency_array
 
 def BFS(adjacency_list: dict, nodes_number: int, start_node: int) -> list:
-    distances = [0 for _ in range(nodes_number)]
-    is_discovered = [False for _ in range(nodes_number)]
+    distances = [0] * nodes_number
+    is_discovered = [False] * nodes_number
     queue = deque()
     queue.append(start_node)
     is_discovered[start_node] = True
