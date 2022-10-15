@@ -23,6 +23,17 @@ def mod_DFS(adjacency_list: dict, start_node: int, color_array: list, is_discove
             mod_DFS(adjacency_list, i, color_array, is_discovered)  
     return color_array
 
+def edges_checker(adj_list: dict, color_array: list) -> bool:
+    i = 1
+    while len(flatten(adj_list.values())) != 0:
+        if len(adj_list[i]) != 0:
+            for j in adj_list[i]:
+                if color_array[i - 1] == color_array[j - 1]:
+                    return False
+                adj_list[j].pop(adj_list[j].index(i))
+                adj_list[i].pop(adj_list[i].index(j))            
+    return True
+
 def main():
     v, e = map(int, input().split())
     edge_array = list(tuple(map(int, input().split())) for _ in range(e))
@@ -42,12 +53,12 @@ def main():
                 if len(adj_list[i]) != 0:
                     next_node = i
                     break
+            next_node = is_discovered.index(False) + 1
         mod_DFS(adj_list, next_node, color_array, is_discovered)
-    print(color_array)
-
-def edges_checker(adj_list: dict):
-    while len(flatten(adj_list.values())) != 0:
-        return
+    if edges_checker(adj_list, color_array):
+        print("YES")
+    else:
+        print("NO")
 
 if __name__ == "__main__":
     main()
