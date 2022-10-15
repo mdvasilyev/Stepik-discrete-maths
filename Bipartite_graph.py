@@ -23,21 +23,17 @@ def adjacency_list(nodes_number: int, edge_array: list) -> dict:
 #         if not v_array[j - 1]:
 #             DFS(v_array, j - 1, edge_array)
 
-def DFS(adjacency_list: dict, nodes_number: int, start_node: int, color_array: list) -> list:
-    queue = deque()
+def DFS(adjacency_list: dict, start_node: int, color_array: list, queue: deque, is_discovered: list) -> list:
     queue.append(start_node)
-    is_discovered = [False] * nodes_number
-    is_discovered[start_node - 1] = True
     counter = 1
-    while len(queue) != 0:
-        cur_node = queue.popleft()
-        for i in adjacency_list[cur_node]:
-            if not is_discovered[i - 1]:
-                is_discovered[i - 1] = True
-                color_array[i - 1] = counter % 2
-                queue.append(i)
-                break
-        counter += 1
+    cur_node = queue.popleft()
+    for i in adjacency_list[cur_node]:
+        if not is_discovered[i - 1]:
+            is_discovered[i - 1] = True
+            color_array[i - 1] = counter % 2
+            queue.append(i)
+            break
+    counter += 1
     return color_array
 
 def main():
@@ -45,7 +41,8 @@ def main():
     edge_array = list(tuple(map(int, input().split())) for _ in range(e))
     color_array = [0] * v
     adj_list = adjacency_list(v, edge_array)
-    print(DFS(adj_list, v, 1, color_array))
+    queue = deque()
+    is_discovered = [False] * v
 
 if __name__ == "__main__":
     main()
