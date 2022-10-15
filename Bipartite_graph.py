@@ -1,3 +1,6 @@
+def flatten(l):
+    return [item for sublist in l for item in sublist]
+
 def adjacency_list(nodes_number: int, edge_array: list) -> dict:
     nodes_array = [i + 1 for i in range(nodes_number)]
     adjacency_array = {}
@@ -41,6 +44,10 @@ def main():
                     break
         mod_DFS(adj_list, next_node, color_array, is_discovered)
     print(color_array)
+
+def edges_checker(adj_list: dict):
+    while len(flatten(adj_list.values())) != 0:
+        return
 
 if __name__ == "__main__":
     main()
