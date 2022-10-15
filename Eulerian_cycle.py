@@ -21,7 +21,7 @@ def check_necessity(adjacency_list: dict) -> bool:
             return False
     return True
 
-def pave_a_path(start_node: int, adj_list: dict, path: list) -> list:
+def pave_a_path(start_node: int, adj_list: dict, path: list) -> tuple:
     queue = deque()
     queue.append(start_node)
     cur_node = start_node
@@ -36,6 +36,7 @@ def pave_a_path(start_node: int, adj_list: dict, path: list) -> list:
     return path, adj_list
 
 def find_a_node_to_start_with(path: list, adj_list: dict, nodes_number: int) -> int:
+    node_to_start_with = -1
     nodes_array = [i + 1 for i in range(nodes_number)]
     for i in nodes_array:
         if i in path and len(adj_list[i]) != 0:
@@ -43,7 +44,7 @@ def find_a_node_to_start_with(path: list, adj_list: dict, nodes_number: int) -> 
             break
     return node_to_start_with
 
-def add_a_cycle(node_to_start_with: int, path: list, adj_list: dict) -> list:
+def add_a_cycle(node_to_start_with: int, path: list, adj_list: dict) -> tuple:
     index = path.index(node_to_start_with)
     queue = deque()
     queue.append(node_to_start_with)
