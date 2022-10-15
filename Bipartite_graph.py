@@ -31,7 +31,8 @@ def edges_checker(adj_list: dict, color_array: list) -> bool:
                 if color_array[i - 1] == color_array[j - 1]:
                     return False
                 adj_list[j].pop(adj_list[j].index(i))
-                adj_list[i].pop(adj_list[i].index(j))            
+                adj_list[i].pop(adj_list[i].index(j))
+        i += 1            
     return True
 
 def main():
@@ -42,10 +43,14 @@ def main():
     is_discovered = [False] * v
     start_node = 1
     mod_DFS(adj_list, start_node, color_array, is_discovered)
+    breaker = False
     while False in is_discovered:
         next_node = -1
         for i in adj_list:
-            if is_discovered[i - 1] == True and len(adj_list[i]) != 0:
+            if adj_list[i].count(i) >= 2:
+                breaker = True
+                break
+            elif is_discovered[i - 1] == True and len(adj_list[i]) != 0:
                 next_node = i
                 break
         else:
@@ -54,8 +59,12 @@ def main():
                     next_node = i
                     break
             next_node = is_discovered.index(False) + 1
+        if breaker:
+            break
         mod_DFS(adj_list, next_node, color_array, is_discovered)
-    if edges_checker(adj_list, color_array):
+    if breaker:
+        print("NO")
+    elif edges_checker(adj_list, color_array):
         print("YES")
     else:
         print("NO")
