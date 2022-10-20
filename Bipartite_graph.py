@@ -13,13 +13,15 @@ def adjacency_list(nodes_number: int, edge_array: list) -> dict:
 
 def mod_DFS(adjacency_list: dict, start_node: int, color_array: list, is_discovered: list) -> list:
     is_discovered[start_node - 1] = True
-    pred = start_node
     for i in adjacency_list[start_node]:
-        if not is_discovered[i - 1]:
-            color_array[i - 1] = color_array[pred - 1] + 1
+        if is_discovered[i - 1]:
+            color_array[start_node - 1] = color_array[i - 1] + 1
+            color_array[start_node - 1] %= 2
+        else:
+            color_array[i - 1] = color_array[start_node - 1] + 1
             color_array[i - 1] %= 2
-            adjacency_list[pred].pop(adjacency_list[pred].index(i))
-            adjacency_list[i].pop(adjacency_list[i].index(pred))
+            adjacency_list[start_node].pop(adjacency_list[start_node].index(i))
+            adjacency_list[i].pop(adjacency_list[i].index(start_node))
             mod_DFS(adjacency_list, i, color_array, is_discovered)  
     return color_array
 
@@ -27,7 +29,7 @@ def edges_checker(adj_list: dict, color_array: list) -> bool:
     i = 1
     while len(flatten(adj_list.values())) != 0:
         if len(adj_list[i]) != 0:
-            for j in adj_list[i]:
+            for j in adj_list[i][:]:
                 if color_array[i - 1] == color_array[j - 1]:
                     return False
                 adj_list[j].pop(adj_list[j].index(i))
@@ -41,33 +43,13 @@ def main():
     color_array = [0] * v
     adj_list = adjacency_list(v, edge_array)
     is_discovered = [False] * v
-    start_node = 1
-    mod_DFS(adj_list, start_node, color_array, is_discovered)
-    breaker = False
-    while False in is_discovered:
-        next_node = -1
-        for i in adj_list:
-            if adj_list[i].count(i) >= 2:
-                breaker = True
-                break
-            elif is_discovered[i - 1] == True and len(adj_list[i]) != 0:
-                next_node = i
-                break
-        else:
-            for i in adj_list:
-                if len(adj_list[i]) != 0:
-                    next_node = i
-                    break
-            next_node = is_discovered.index(False) + 1
-        if breaker:
-            break
-        mod_DFS(adj_list, next_node, color_array, is_discovered)
-    if breaker:
+    for i, val in enumerate(is_discovered):
+        if not val:
+            mod_DFS(adj_list, i + 1, color_array, is_discovered)
+    if not edges_checker(adj_list, color_array):
         print("NO")
-    elif edges_checker(adj_list, color_array):
-        print("YES")
     else:
-        print("NO")
+        print("YES")
 
 if __name__ == "__main__":
     main()
