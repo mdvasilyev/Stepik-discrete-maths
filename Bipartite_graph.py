@@ -13,11 +13,8 @@ def adjacency_list(nodes_number: int, edge_array: list) -> dict:
 
 def mod_DFS(adjacency_list: dict, start_node: int, color_array: list, is_discovered: list) -> list:
     is_discovered[start_node - 1] = True
-    for i in adjacency_list[start_node]:
-        if is_discovered[i - 1]:
-            color_array[start_node - 1] = color_array[i - 1] + 1
-            color_array[start_node - 1] %= 2
-        else:
+    for i in adjacency_list[start_node][:]:
+        if not is_discovered[i - 1]:
             color_array[i - 1] = color_array[start_node - 1] + 1
             color_array[i - 1] %= 2
             adjacency_list[start_node].pop(adjacency_list[start_node].index(i))
