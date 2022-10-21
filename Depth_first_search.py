@@ -10,7 +10,7 @@ def adjacency_list(nodes_number: int, edge_array: list) -> dict:
 
 def DFS(is_discovered: list, start_node: int, adj_list: dict):
     is_discovered[start_node - 1] = True
-    for j in adj_list[start_node]:
+    for j in adj_list[start_node][:]:
         if not is_discovered[j - 1]:
             adj_list[start_node].pop(adj_list[start_node].index(j))
             adj_list[j].pop(adj_list[j].index(start_node))
