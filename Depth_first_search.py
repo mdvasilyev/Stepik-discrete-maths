@@ -34,26 +34,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# def DFS(v_array, iterator: int, edge_array):
-#     v_array[iterator] = True
-#     neighbours_array = []
-#     for j in range(len(edge_array)):
-#         if edge_array[j, 0] == iterator + 1:
-#             neighbours_array.append(edge_array[j, 1])
-#         elif edge_array[j, 1] == iterator + 1:
-#             neighbours_array.append(edge_array[j, 0])
-#     for j in neighbours_array:
-#         j = int(j)
-#         if not v_array[j - 1]:
-#             DFS(v_array, j - 1, edge_array)
-
-
-# def main():
-#     v, e = map(int, input().split())
-#     edge_array = np.zeros((e, 2))
-#     for i in range(e):
-#         edge_array[i, 0], edge_array[i, 1] = map(int, input().split())
-#     connectivity_number = connectivity(v, edge_array)
-#     print(connectivity_number)
